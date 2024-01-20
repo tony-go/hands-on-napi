@@ -1,0 +1,11 @@
+{
+  "name": "hands-on-napi",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "node-addon-api": "*"
+  }
+}
