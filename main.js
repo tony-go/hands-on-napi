@@ -1,16 +1,22 @@
-const { doCryptoWork } = require('./hash.js');
 const largeData = require('./data.js');
-const { doNativeCryptoWork } = require('./build/Release/hashaddon.node');
+const { hash } = require('./hash.js');
+const nativeaddon = require('./build/Release/hashaddon');
 
 const operations = 10_000_000;
+const jsHashes = [];
+const nativeHashes = [];
 
 console.time('Do crypto work in JS');
-const jsCount = doCryptoWork(largeData, operations);
+for (let i = 0; i < operations; i++) {
+  jsHashes.push(hash(largeData));
+}
 console.timeEnd('Do crypto work in JS');
-console.log(jsCount + ' hashes generated in js');
 
-console.time('Do crypto work in C++');
-const nativeCount = doNativeCryptoWork(largeData, operations);
-console.timeEnd('Do crypto work in C++');
-console.log(nativeCount + ' hashes generated in C++');
+console.time('Do crypto work in native addon');
+for (let i = 0; i < operations; i++) {
+  nativeHashes.push(nativeaddon.hash(largeData));
+}
+console.timeEnd('Do crypto work in native addon');
+
+console.log(jsHashes[0], nativeHashes[0]);
 
