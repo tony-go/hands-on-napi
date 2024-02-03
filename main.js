@@ -14,7 +14,9 @@ console.timeEnd('Do crypto work in JS');
 
 console.time('Do crypto work in native addon');
 for (let i = 0; i < operations; i++) {
-  nativeHashes.push(nativeaddon.hash(largeData));
+  const buffer = Buffer.alloc(32);
+  nativeaddon.hash(largeData, buffer);
+  nativeHashes.push(buffer.toString('hex'));
 }
 console.timeEnd('Do crypto work in native addon');
 
